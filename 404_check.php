@@ -44,18 +44,27 @@ function curl_check($target_url, $relativePath=false)//完全なurlが入る
 
 
 
+$post_type = 'post'; //確認したいpost_type
+
+$count_posts = wp_count_posts($post_type);
+$posts = $count_posts->publish;//公開済みの
+echo '記事数は'.$posts.'件です';
+
+//何回ループを回すか
+$roop_count = $posts /
+$show_num = 50; //1回で取得する表示件数
+
 //todo 全ての件数を回す
 $args = array(
-    // 'page_id' => 5,//指定したい場合
-    'post_type' => 'post',  // 投稿タイプ
-    'posts_per_page' => 50, // 表示件数。 -1ならすべての投稿を取得
+    // 'page_id' => 5,//特定の記事を指定したい場合
+    'post_type' => $post_type,  // 投稿タイプ
+    'posts_per_page' => $show_num, // 表示件数。 -1ならすべての投稿を取得
     'orderby' => 'date',    // ソート
                             // ・date  ：日付
                             // ・rand  ：ランダム
     'order' => 'ASC',
-    'paged' => 1
+    'paged' => 1//何ページ目を取得するか
 );    // 降順(日付の場合、日付が新しい順)
-
 
 
 $result = [];//404のurlを詰め込む
